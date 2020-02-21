@@ -1,0 +1,48 @@
+version: '3'
+services:
+  django:
+    restart: always
+    build: ./django
+    container_name: "django_container"
+    command: sh ./utils/start.sh
+    volumes:
+      - "./django:/opt/apps/"
+      - "staticdata:/opt/static/"
+    ports:
+      - 8000:8000
+    links:
+      - db
+    tty: true
+    stdin_open: true
+  nginx:
+    restart: always
+    image: nginx
+    container_name: "nginx_django"
+    links:
+      - django
+    ports:
+      - 80:80
+    volumes:
+      - "./nginx/:/etc/nginx/"
+      - "staticdata:/opt/apps/static/"
+    tty: true
+    stdin_open: true
+  db:
+    restart: always
+    image: postgres
+    container_name: "postgres_db"
+    environment:
+      - POSTGRES_USER=user_dev
+      - POSTGRES_PASSWORD=pass_dev
+      - POSTGRES_DB=develop_db
+    ports:
+      - 5432:5432
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+    tty: true
+    stdin_open: true
+volumes:
+#  Shared data between django and db
+  dbdata:
+#  Shared data between django and nginx
+  staticdata:
