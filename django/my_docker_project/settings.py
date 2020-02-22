@@ -35,11 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'rest_framework',
     'django.contrib.sites',
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -166,3 +163,6 @@ FIXTURE_DIRS = (
 
 # Without this, admin/login won't be found
 SITE_ID = 1
+
+# For original user model
+AUTH_USER_MODEL = 'users.CustomUser'
