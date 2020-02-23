@@ -1,4 +1,4 @@
-"""my_docker_project URL Configuration
+"""what_to_eat_now URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -13,10 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.urls import path, include
 from django.contrib import admin
+from rest_framework import routers
+
+from user_detail.views import UserDetailView
+from options.views import FoodOptionsView
+
+router = routers.DefaultRouter(trailing_slash=False)
+router.register(r'user/detail/', UserDetailView)
 
 urlpatterns = [
-    url('admin/', admin.site.urls),
-    # url('auth/', include('allauth.urls')),
+    path('api/options', FoodOptionsView.as_view()),  # To get what kind of food options there is
+    path('api/', include(router.urls)),  # DRF
+    path('admin/', admin.site.urls),
+    path('auth/', include('allauth.urls')),  # social login
+    path('', include('link.urls')),  # linking social account
 ]

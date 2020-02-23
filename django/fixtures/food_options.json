@@ -1,0 +1,9 @@
+[
+  {
+    "model": "options.FoodOptions",
+    "pk": 1,
+    "fields": {
+      "food": "トマト"
+    }
+  }
+]

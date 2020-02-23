@@ -1,5 +1,5 @@
 """
-WSGI config for my_docker_project project.
+WSGI config for what_to_eat_now project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'my_docker_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'what_to_eat_now.settings')
 
 application = get_wsgi_application()
