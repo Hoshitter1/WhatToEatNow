@@ -162,18 +162,23 @@ FIXTURE_DIRS = (
     'fixtures/',
 )
 
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
-    'DEFAULT_RENDERER_CLASSES': [
-        'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
-    ],
-    'DEFAULT_PARSER_CLASSES': (
-        'djangorestframework_camel_case.parser.CamelCaseJSONParser',
-    ),
-    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.AllowAny',
+#     ],
+#     'DEFAULT_RENDERER_CLASSES': [
+#         'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
+#     ],
+#     'DEFAULT_PARSER_CLASSES': (
+#         'djangorestframework_camel_case.parser.CamelCaseJSONParser',
+#     ),
+#     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+# }
+# Without this, only json data comes up on your browser
+# if DEBUG:
+#     REST_FRAMEWORK.get('DEFAULT_RENDERER_CLASSES').append(
+#         'rest_framework.renderers.BrowsableAPIRenderer'
+#     )
 
 ######################################
 # Authentication                     #
