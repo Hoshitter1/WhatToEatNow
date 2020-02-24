@@ -1,6 +1,8 @@
 
 DB_USERNAME := user_dev
 DB_NAME := develop_db
+$(eval YOUR_CHANNEL_ACCESS_TOKEN := $(shell cat access_token_stg.txt))
+$(eval YOUR_CHANNEL_SECRET := $(shell cat channel_secret_stg.txt))
 
 database: #See what's in database
 	docker exec -it postgres_db bash -c "psql -U $(DB_USERNAME) -d $(DB_NAME)"
@@ -19,3 +21,7 @@ loaddata: #Read initial data
 
 delete_migrate: #[BE CAREFUL] this deletes all migration history so that you can test various model structures
 	find . -path "*/migrations/*.py" -not -name "__init__.py" -delete && find . -path "*/migrations/*.pyc"  -delete
+
+build:
+	docker-compose build --build-arg YOUR_CHANNEL_ACCESS_TOKEN=$(YOUR_CHANNEL_ACCESS_TOKEN) \
+	                     --build-arg YOUR_CHANNEL_SECRET=$(YOUR_CHANNEL_SECRET)
