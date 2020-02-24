@@ -25,6 +25,18 @@ Access to the link below to see api
 localhost:80/api
 ```
 
+For testing webhook
+
+```
+`ngrok http 80`
+```
+
+if you have not installed `ngrok`, install wby the command below
+
+```
+brew cask install ngrok
+```
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 

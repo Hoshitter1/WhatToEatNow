@@ -136,3 +136,6 @@ dmypy.json
 #exclude django stuff
 **/migrations/
 
+#Secret stuff
+access_token_stg.txt
+channel_secret_stg.txt

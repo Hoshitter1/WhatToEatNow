@@ -1,0 +1,17 @@
+[
+  {
+    "model": "user_detail.UserDetail",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "gender": "1",
+      "age": "25",
+      "like_ingredients": "('トマト','きゅうり')",
+      "ok_ingredients": "('しいたけ')",
+      "dislike_ingredients": "('イカ')",
+      "like_recipe": "('チャーハン')",
+      "ok_recipe": "('ラーメン')",
+      "dislike_recipe": "('カレー')"
+    }
+  }
+]
