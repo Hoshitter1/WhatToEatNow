@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'users',
     'link',
     'options',
-    'user_detail'
+    'user_detail',
+    'line_bot_app',
 ]
 
 MIDDLEWARE = [

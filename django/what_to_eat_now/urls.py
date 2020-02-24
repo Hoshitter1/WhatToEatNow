@@ -28,5 +28,6 @@ urlpatterns = [
     path('api/', include(router.urls)),  # DRF
     path('admin/', admin.site.urls),
     path('auth/', include('allauth.urls')),  # social login
+    path('linebot/', include('line_bot_app.urls')),  # Linebot
     path('', include('link.urls')),  # linking social account
 ]

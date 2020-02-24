@@ -16,3 +16,4 @@ class UserDetailSerializer(serializers.ModelSerializer):
             'ok_recipe',
             'dislike_recipe'
         )
+#         '__all__'
