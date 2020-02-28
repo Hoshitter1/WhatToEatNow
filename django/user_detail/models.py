@@ -1,11 +1,21 @@
+from enum import Enum
+
 from django.db import models
 
 from users.models import CustomUser
 
-GENDER_CHOICES = [
-    ('1', '女性'),
-    ('2', '男性'),
-]
+
+class Gender(Enum):
+    """
+    class for choices of gender table.
+    If extension of name of key (e.g MN) is needed, update max_length=2 to your preferred number.
+    """
+    MN = 'man'
+    WM = 'woman'
+
+    @classmethod
+    def choices(cls):
+        return [(v.name, v.value) for v in cls]
 
 
 class UserDetail(models.Model):
@@ -13,10 +23,13 @@ class UserDetail(models.Model):
     Avoid using null on string-based fields such as CharField and TextField. If a string-based field has null=True,
     that means it has two possible values for “no data”: NULL, and the empty string. In most cases,
     it’s redundant to have two possible values for “no data;” the Django convention is to use the empty string, not NULL
+
+    TODO: Delete this later
     """
-    user = models.ForeignKey(CustomUser, verbose_name='user', on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     # For recommending foods that tend to be preferred by certain gender
-    gender = models.CharField('gender', max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
+    # You need either null = True or default
+    gender = models.CharField('gender', max_length=2, choices=Gender.choices(), blank=True, null=True)
     # For recommending foods that tend to be preferred by certain age
     age = models.IntegerField('age', blank=True, null=True)
 
