@@ -13,5 +13,35 @@
       "ok_recipe": "('ラーメン')",
       "dislike_recipe": "('カレー')"
     }
+  },
+  {
+    "model": "user_detail.UserDetail",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "gender": "1",
+      "age": "15",
+      "like_ingredients": "('トマト','きゅうり')",
+      "ok_ingredients": "('しいたけ')",
+      "dislike_ingredients": "('イカ')",
+      "like_recipe": "('チャーハン')",
+      "ok_recipe": "('ラーメ')",
+      "dislike_recipe": "('カレー')"
+    }
+  },
+  {
+    "model": "user_detail.UserDetail",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "gender": "2",
+      "age": "35",
+      "like_ingredients": "('トマト','きゅうり')",
+      "ok_ingredients": "('しいたけ')",
+      "dislike_ingredients": "('イカ')",
+      "like_recipe": "('チャーハン')",
+      "ok_recipe": "('ラーメ')",
+      "dislike_recipe": "('カレー')"
+    }
   }
 ]
