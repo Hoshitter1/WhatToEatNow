@@ -20,7 +20,9 @@ class IsOwner(permissions.BasePermission):
         return bool(obj.user == request.user)
 
 
-class UserDetailUpdateView(mixins.UpdateModelMixin, viewsets.GenericViewSet):
+class UserDetailUpdateView(mixins.RetrieveModelMixin,
+                           mixins.UpdateModelMixin,
+                           viewsets.GenericViewSet):
     queryset = UserDetail.objects.all()
     serializer_class = UserDetailSerializer
     permission_classes = (IsOwner,)
@@ -31,6 +33,7 @@ class UserDetailUpdateView(mixins.UpdateModelMixin, viewsets.GenericViewSet):
         """
         kwargs['partial'] = True
         return self.update(request, *args, **kwargs)
+
 
 # Another way of updating
 # class UserDetailView(viewsets.ModelViewSet):
