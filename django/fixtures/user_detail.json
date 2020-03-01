@@ -11,7 +11,8 @@
       "dislike_ingredients": "トマト,きゅうり",
       "like_recipe": "トマト,きゅうり",
       "ok_recipe": "トマト,きゅうり",
-      "dislike_recipe": "トマト,きゅうり"
+      "dislike_recipe": "トマト,きゅうり",
+      "recommended_recipe": "ラーメン"
     }
   },
   {
@@ -26,7 +27,8 @@
       "dislike_ingredients": "トマト,きゅうり",
       "like_recipe": "トマト,きゅうり",
       "ok_recipe": "トマト,きゅうり",
-      "dislike_recipe": "トマト,きゅうり"
+      "dislike_recipe": "トマト,きゅうり",
+      "recommended_recipe": "佃煮"
     }
   },
   {
@@ -41,7 +43,8 @@
       "dislike_ingredients": "トマト,きゅうり",
       "like_recipe": "トマト,きゅうり",
       "ok_recipe": "トマト,きゅうり",
-      "dislike_recipe": "トマト,きゅうり"
+      "dislike_recipe": "トマト,きゅうり",
+      "recommended_recipe": "サーモンのムニエル"
     }
   }
 ]
