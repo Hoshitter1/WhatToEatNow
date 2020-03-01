@@ -8,8 +8,9 @@ class UserDetailAdmin(admin.ModelAdmin):
         ('User Profile', {'fields': ('slug', 'gender', 'age')}),
         ('Preferences Of Ingredients', {'fields': ('like_ingredients', 'ok_ingredients', 'dislike_ingredients')}),
         ('Preferences Of Recipe', {'fields': ('like_recipe', 'ok_recipe', 'dislike_recipe')}),
+        ('User History', {'fields': ('recommended_recipe',)}),
     )
-    list_display = ['slug', 'gender', 'age']
+    list_display = ['slug', 'gender', 'age', 'recommended_recipe']
 
 
 admin.site.register(UserDetail, UserDetailAdmin)

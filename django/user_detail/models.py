@@ -2,8 +2,6 @@ from enum import Enum
 
 from django.db import models
 
-from users.models import CustomUser
-
 
 class Gender(Enum):
     """
@@ -33,7 +31,7 @@ class UserDetail(models.Model):
         null=True,
         max_length=50,
     )
-    # For security purpose. lookup key.
+    # For security purpose when look up. Slug connects between detail and user models.
     slug = models.SlugField(blank=False)
     # For recommending foods that tend to be preferred by certain gender
     # You need either null = True or default
@@ -50,6 +48,9 @@ class UserDetail(models.Model):
     like_recipe = models.TextField(verbose_name='like_recipe', blank=True)
     ok_recipe = models.TextField(verbose_name='ok_recipe', blank=True)
     dislike_recipe = models.TextField(verbose_name='dislike_recipe', blank=True)
+
+    # recipe that has been recommended before
+    recommended_recipe = models.TextField(verbose_name='recommended_recipe', blank=True)
 
     def __str__(self):
         """
