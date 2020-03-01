@@ -40,7 +40,7 @@ For testing webhook
 `ngrok http 80`
 ```
 
-if you have not installed `ngrok`, install wby the command below
+if you have not installed `ngrok`, install by the command below
 
 ```
 brew cask install ngrok
