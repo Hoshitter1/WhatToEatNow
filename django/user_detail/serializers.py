@@ -9,6 +9,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
         model = UserDetail
         lookup_field = 'slug'
         fields = (
+            'line_message_uid',
             'slug',
             'gender',
             'age',
@@ -18,9 +19,9 @@ class UserDetailSerializer(serializers.ModelSerializer):
             'like_recipe',
             'ok_recipe',
             'dislike_recipe',
-            'recommended_recipe'
+            'recommended_recipe',
         )
-        # read_only_user
+        read_only_fields = ('slug', 'line_message_uid',)
 
     def validate(self, data: dict):
         """
