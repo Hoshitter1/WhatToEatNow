@@ -1,7 +1,6 @@
 version: '3'
 services:
   django:
-    restart: always
     build: ./django
     container_name: "django_container"
     command: sh ./utils/start.sh
@@ -15,7 +14,6 @@ services:
     tty: true
     stdin_open: true
   nginx:
-    restart: always
     image: nginx
     container_name: "nginx_django"
     links:
@@ -28,7 +26,6 @@ services:
     tty: true
     stdin_open: true
   db:
-    restart: always
     image: postgres
     container_name: "postgres_db"
     environment:
