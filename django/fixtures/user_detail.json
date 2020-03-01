@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "user": 1,
-      "gender": "1",
+      "gender": "MN",
       "age": "25",
       "like_ingredients": "('トマト','きゅうり')",
       "ok_ingredients": "('しいたけ')",
@@ -19,7 +19,7 @@
     "pk": 2,
     "fields": {
       "user": 2,
-      "gender": "1",
+      "gender": "MN",
       "age": "15",
       "like_ingredients": "('トマト','きゅうり')",
       "ok_ingredients": "('しいたけ')",
@@ -34,7 +34,7 @@
     "pk": 3,
     "fields": {
       "user": 3,
-      "gender": "2",
+      "gender": "MN",
       "age": "35",
       "like_ingredients": "('トマト','きゅうり')",
       "ok_ingredients": "('しいたけ')",
