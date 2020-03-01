@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
         max_length=50,
     )
     line_message_uid = models.CharField(
-        verbose_name='message_uid to line the user',
+        verbose_name='line_message_uid',
         blank=True,
         null=True,
         max_length=50,
