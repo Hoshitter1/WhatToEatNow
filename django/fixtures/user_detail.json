@@ -3,45 +3,45 @@
     "model": "user_detail.UserDetail",
     "pk": 1,
     "fields": {
-      "user": 1,
+      "slug": 132132124334,
       "gender": "MN",
       "age": "25",
-      "like_ingredients": "('トマト','きゅうり')",
-      "ok_ingredients": "('しいたけ')",
-      "dislike_ingredients": "('イカ')",
-      "like_recipe": "('チャーハン')",
-      "ok_recipe": "('ラーメン')",
-      "dislike_recipe": "('カレー')"
+      "like_ingredients": "トマト,きゅうり",
+      "ok_ingredients": "トマト,きゅうり",
+      "dislike_ingredients": "トマト,きゅうり",
+      "like_recipe": "トマト,きゅうり",
+      "ok_recipe": "トマト,きゅうり",
+      "dislike_recipe": "トマト,きゅうり"
     }
   },
   {
     "model": "user_detail.UserDetail",
     "pk": 2,
     "fields": {
-      "user": 2,
+      "slug": 42341354324,
       "gender": "MN",
       "age": "15",
-      "like_ingredients": "('トマト','きゅうり')",
-      "ok_ingredients": "('しいたけ')",
-      "dislike_ingredients": "('イカ')",
-      "like_recipe": "('チャーハン')",
-      "ok_recipe": "('ラーメ')",
-      "dislike_recipe": "('カレー')"
+      "like_ingredients": "トマト,きゅうり",
+      "ok_ingredients": "トマト,きゅうり",
+      "dislike_ingredients": "トマト,きゅうり",
+      "like_recipe": "トマト,きゅうり",
+      "ok_recipe": "トマト,きゅうり",
+      "dislike_recipe": "トマト,きゅうり"
     }
   },
   {
     "model": "user_detail.UserDetail",
     "pk": 3,
     "fields": {
-      "user": 3,
+      "slug": 331231235234,
       "gender": "MN",
       "age": "35",
-      "like_ingredients": "('トマト','きゅうり')",
-      "ok_ingredients": "('しいたけ')",
-      "dislike_ingredients": "('イカ')",
-      "like_recipe": "('チャーハン')",
-      "ok_recipe": "('ラーメ')",
-      "dislike_recipe": "('カレー')"
+      "like_ingredients": "トマト,きゅうり",
+      "ok_ingredients": "トマト,きゅうり",
+      "dislike_ingredients": "トマト,きゅうり",
+      "like_recipe": "トマト,きゅうり",
+      "ok_recipe": "トマト,きゅうり",
+      "dislike_recipe": "トマト,きゅうり"
     }
   }
 ]

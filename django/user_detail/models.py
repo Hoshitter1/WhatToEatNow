@@ -26,7 +26,15 @@ class UserDetail(models.Model):
 
     TODO: Delete this later
     """
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    # In case that users use this app via line app only
+    line_message_uid = models.CharField(
+        verbose_name='message_uid to line the user',
+        blank=True,
+        null=True,
+        max_length=50,
+    )
+    # For security purpose. lookup key.
+    slug = models.SlugField(blank=False)
     # For recommending foods that tend to be preferred by certain gender
     # You need either null = True or default
     gender = models.CharField('gender', max_length=2, choices=Gender.choices(), blank=True, null=True)
@@ -47,4 +55,4 @@ class UserDetail(models.Model):
         """
         For admin to show what' inside of the column
         """
-        return self.user.username
+        return self.slug

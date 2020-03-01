@@ -23,6 +23,7 @@ class IsOwner(permissions.BasePermission):
 class UserDetailUpdateView(mixins.RetrieveModelMixin,
                            mixins.UpdateModelMixin,
                            viewsets.GenericViewSet):
+    lookup_field = 'slug'
     queryset = UserDetail.objects.all()
     serializer_class = UserDetailSerializer
     permission_classes = (IsOwner,)

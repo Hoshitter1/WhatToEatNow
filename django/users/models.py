@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser
 
 
 class CustomUser(AbstractUser):
+    # blank equals false because user might tell us their preference via line app only
+    slug = models.SlugField(blank=False)
     # TODO: Change some values once the system design is decided
     nonce_for_line = models.CharField(
         verbose_name='nonce for linking line account',
