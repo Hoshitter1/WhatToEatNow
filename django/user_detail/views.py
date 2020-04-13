@@ -68,16 +68,3 @@ class UserDetailUpdateView(
     queryset = UserDetail.objects.all()
     serializer_class = UserDetailSerializer
     permission_classes = (IsOwnerOrAdmin,)
-
-    def partial_update(self, request, *args, **kwargs):
-        """
-        allow users to update items partially as module name indicates
-        """
-        kwargs['partial'] = True
-        return self.update(request, *args, **kwargs)
-
-# Another way of updating
-# class UserDetailView(viewsets.ModelViewSet):
-#     serializer_class = UserDetailSerializer
-#     queryset = UserDetail.objects.all()
-#     # permission_classes = [IsAccountAdminOrReadOnly]

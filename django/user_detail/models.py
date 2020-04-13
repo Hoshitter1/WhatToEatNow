@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Dict, List
 
 from django.db import models
 
@@ -24,6 +25,7 @@ def slug_generator():
 
 
 class UserDetailManager(models.Manager):
+
     def create_new_account(self, line_message_uid):
         # Create new user_detail
         detail_obj = self.create(line_message_uid=line_message_uid)
@@ -37,6 +39,44 @@ class UserDetailManager(models.Manager):
         user_obj.save()
 
         return detail_obj
+
+    def update_preferences(
+            self,
+            user: Dict[str, str] = {},
+            *,
+            update_field: str,
+            update_item: str
+    ):
+        """
+
+        Args:
+            user: key: search_word value: value to suit search_word for the lookup
+            update_field: field of user detail model to update
+            update_item: value that user wants to add to the field
+
+        Returns:
+            user_obj (): user detail object
+        """
+        # breakpoint()
+        user_obj = UserDetail.objects.all().filter(**user).first()
+        if user_obj is None:
+            user_obj = self.create(**user)
+            user_obj.slug = slug_generator()
+
+        pref: str = getattr(user_obj, update_field)
+        pref_list: List[str] = []
+        if pref != '':
+            pref_list = pref.split(',')
+
+        if update_item in pref_list:
+            return user_obj
+        pref_list.append(update_item)
+        updated_pref: str = ','.join(pref_list)
+
+        setattr(user_obj, update_field, updated_pref)
+        user_obj.save()
+
+        return user_obj
 
 
 class UserDetail(models.Model):
@@ -82,5 +122,3 @@ class UserDetail(models.Model):
         For admin to show what' inside of the column
         """
         return self.slug
-
-

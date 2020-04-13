@@ -1,12 +1,16 @@
 version: '3'
 services:
   django:
-    build: ./django
+    build:
+      context: ./django
+      dockerfile: Dockerfile
     container_name: "django_container"
     command: sh ./utils/start.sh
     volumes:
       - "./django:/opt/apps/"
       - "staticdata:/opt/static/"
+    expose:
+      - 8000
     ports:
       - 8000:8000
     links:

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Dict
 
 from rest_framework import serializers
 from .models import UserDetail
@@ -23,22 +23,26 @@ class UserDetailSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ('slug', 'line_message_uid',)
 
-    def validate(self, data: dict):
-        """
-        Expected data
-        'apple,egg,etc...' str comma str comma ...
-        Unexpected data
-        e.g 1 'apple(,egg,..'
-        e.g 2 '(apple),egg,...'
-        each character has to be in pure name without any other strings
+    def validate(self, data: Dict[str, str]) -> Dict[str, str]:
+        """Validate user request data
+        
+         Args:
+            data (dict): data from user request
+ 
+         Returns:
+            data (dict): validated data
+
+         Notes:
+             Expected data
+             'apple,egg,etc...' str comma str comma ...
+             Unexpected data
+             e.g 1 'apple(,egg,..'
+             e.g 2 '(apple),egg,...'
+             each character has to be in pure name without any other strings
+
         """
         # TODO:Add validator for recipe
-        # target_key_recipe = [
-        #     'like_recipe',
-        #     'ok_recipe',
-        #     'dislike_recipe',
-        #     'recommended_recipe'
-        # ]
+        # Theses validation should be separated by category?
         target_key_ingredients = [
             'like_ingredients',
             'dislike_ingredients',
@@ -47,7 +51,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
         ingredients_fractal: List[List[str]] = [
             data.get(key).split(',')  # TODO: This needs validation too
             for key in target_key_ingredients
-            if data.get(key, None) is not None  # for partial update
+            if key in data.keys()  # For partial update
         ]
         ingredients_flat: List[str] = [
             data_inner

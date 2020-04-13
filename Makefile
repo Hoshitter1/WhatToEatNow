@@ -26,3 +26,6 @@ clean_db: #[BE CAREFUL] this deletes all migration history so that you can test 
 build:
 	docker-compose build --build-arg YOUR_CHANNEL_ACCESS_TOKEN=$(YOUR_CHANNEL_ACCESS_TOKEN) \
 	                     --build-arg YOUR_CHANNEL_SECRET=$(YOUR_CHANNEL_SECRET)
+
+debug:
+	docker attach django_container
