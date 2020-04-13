@@ -3,7 +3,7 @@
 ## WhatToEatNow has two functions.
 ### 1. Line bot to recommend what to eat now.
 
-### 2. Webapp for users to save their preferences.
+### 2. RestAPI for users to save their preferences.
 
 ## Usage
 ### How to start
