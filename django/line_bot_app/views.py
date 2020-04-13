@@ -1,80 +1,59 @@
 import os
+from typing import List, Type, Optional
 
-from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseForbidden, HttpResponse
+from rest_framework.views import APIView
 
-from linebot import (
-    LineBotApi, WebhookHandler
-)
-from linebot.exceptions import (
-    InvalidSignatureError
-)
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage, LocationMessage, AccountLinkEvent
-)
+from linebot import WebhookParser
+from linebot.exceptions import InvalidSignatureError
+from linebot.models.events import Event
 
-YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
-YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
-line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
-handler = WebhookHandler(YOUR_CHANNEL_SECRET)
+from .manager_bases import SpecificManagerBase
+from .actions.general_action_manager import GeneralActionManager
+from .actions.base import ActionBase
 
 
-@csrf_exempt
-def callback(request):
-    """
-    Webhook request always comes here first
-    so handler will be enabled.
-    """
-    signature = request.META['HTTP_X_LINE_SIGNATURE']
-    body = request.body.decode('utf-8')
-    try:
-        handler.handle(body, signature)
-    except InvalidSignatureError:
-        HttpResponseForbidden()
-    return HttpResponse('OK', status=200)
+class LineCallBack(APIView):
+    channel_secret = os.environ["YOUR_CHANNEL_SECRET"]
 
+    def post(self, request):
+        """
+        """
+        signature = request.META.get('HTTP_X_LINE_SIGNATURE', False)
+        if not signature:
+            # TODO: Add a error log
+            print('signature was not found')
+            return HttpResponseForbidden()
 
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    test_terms = ["テスト"]
-    is_interact_mode = False
-    for term in test_terms:
-        if term in event.message.text:
-            is_interact_mode = True
+        body = request.body.decode('utf-8')
+        try:
+            events: List[Type[Event]] = WebhookParser(self.__class__.channel_secret).parse(body, signature)
+        except InvalidSignatureError:
+            # TODO: Add a error log
+            print(self.__class__.channel_secret)
+            print('Invalid signature error')
+            return HttpResponseForbidden()
 
-    if is_interact_mode:
-        # Get linkToken for user to link their line account with webapp
-        uid = event.source.user_id
-        account_link_url = f'{uid}\n This is test'
-        msg = TextSendMessage(text=account_link_url)
-        line_bot_api.reply_message(event.reply_token, msg)
-        # msg = TextSendMessage(text=f'{profile.display_name}')
-        # line_bot_api.push_message(send_to, messages=msg)
+        self.__execute_action(events)
+        return HttpResponse('OK', status=200)
 
+    @staticmethod
+    def __execute_action(events: List[Type[Event]]) -> None:
+        """
+        # TODO: Use async or celory to handle action from here
+        Args:
+            events (List[Type[Event]]):
 
-@handler.add(AccountLinkEvent)
-def auth_notification(event):
-    nonce = event.link.nonce
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text="認証できたで！！！！！"
-                             f"your nonce is {nonce}"
-                             f"your id is {event.source.user_id}")
-    )
+        """
+        for event in events:
+            # TODO: Leave these until some other actions are integrated apart from Message.
+            # Probably new class has to be created so action manager and specific action manager are put together
+            event_type: str = event.type
+            specific_action_manager: Optional[Type[SpecificManagerBase]] = GeneralActionManager.get_manager(event_type)
+            if specific_action_manager is None:
+                continue
 
-
-@handler.add(MessageEvent, message=TextMessage)
-def send_account_linking_url(event):
-    linking_terms = ["連携", 'れんけい']
-    is_interact_mode = False
-    if event.message.text in linking_terms:
-        is_interact_mode = True
-
-    if is_interact_mode:
-        # Get linkToken for user to link their line account with webapp
-        uid = event.source.user_id
-        result = line_bot_api.issue_link_token(uid)
-        token = result.link_token
-        account_link_url = f'http://localhost/login?linkToken={token}'
-        msg = TextSendMessage(text=account_link_url)
-        line_bot_api.reply_message(event.reply_token, msg)
+            action: Optional[ActionBase] = specific_action_manager.get_action(event)
+            if action is None:
+                continue
+            action.execute()

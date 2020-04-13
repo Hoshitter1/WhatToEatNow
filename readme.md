@@ -6,11 +6,20 @@
 ### 2. Webapp for users to save their preferences.
 
 ## Usage
-
+### How to start
+※ Referer to Makefile
+1. Create access_token_stg.txt
+2. Create channel_secret_stg.txt
+3. 
+```bash
+make build
+```
+4.
 ```bash
 docker-compose up
 ```
-Delete existing volume to refresh static data(restframework)
+
+### How to delete existing volume to refresh static data
 ```bash
 docker-compose down -v
 ```
@@ -31,7 +40,7 @@ For testing webhook
 `ngrok http 80`
 ```
 
-if you have not installed `ngrok`, install wby the command below
+if you have not installed `ngrok`, install by the command below
 
 ```
 brew cask install ngrok

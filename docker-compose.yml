@@ -1,13 +1,16 @@
 version: '3'
 services:
   django:
-    restart: always
-    build: ./django
+    build:
+      context: ./django
+      dockerfile: Dockerfile
     container_name: "django_container"
     command: sh ./utils/start.sh
     volumes:
       - "./django:/opt/apps/"
       - "staticdata:/opt/static/"
+    expose:
+      - 8000
     ports:
       - 8000:8000
     links:
@@ -15,7 +18,6 @@ services:
     tty: true
     stdin_open: true
   nginx:
-    restart: always
     image: nginx
     container_name: "nginx_django"
     links:
@@ -28,7 +30,6 @@ services:
     tty: true
     stdin_open: true
   db:
-    restart: always
     image: postgres
     container_name: "postgres_db"
     environment:

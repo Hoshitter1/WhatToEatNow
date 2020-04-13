@@ -1,11 +1,82 @@
+from enum import Enum
+from typing import Dict, List
+
 from django.db import models
 
 from users.models import CustomUser
 
-GENDER_CHOICES = [
-    ('1', '女性'),
-    ('2', '男性'),
-]
+
+class Gender(Enum):
+    """
+    class for choices of gender table.
+    If extension of name of key (e.g MN) is needed, update max_length=2 to your preferred number.
+    """
+    MN = 'man'
+    WM = 'woman'
+
+    @classmethod
+    def choices(cls):
+        return [(v.name, v.value) for v in cls]
+
+
+def slug_generator():
+    # TODO: Create this function
+    return 'some_randome_number'
+
+
+class UserDetailManager(models.Manager):
+
+    def create_new_account(self, line_message_uid):
+        # Create new user_detail
+        detail_obj = self.create(line_message_uid=line_message_uid)
+        detail_obj.slug = slug_generator()
+        detail_obj.save()
+
+        # Create new user account
+        user_obj = CustomUser.objects.create(slug=str(detail_obj.slug))
+        user_obj.line_message_uid = line_message_uid
+        user_obj.username = 'Created via Line'
+        user_obj.save()
+
+        return detail_obj
+
+    def update_preferences(
+            self,
+            user: Dict[str, str] = {},
+            *,
+            update_field: str,
+            update_item: str
+    ):
+        """
+
+        Args:
+            user: key: search_word value: value to suit search_word for the lookup
+            update_field: field of user detail model to update
+            update_item: value that user wants to add to the field
+
+        Returns:
+            user_obj (): user detail object
+        """
+        # breakpoint()
+        user_obj = UserDetail.objects.all().filter(**user).first()
+        if user_obj is None:
+            user_obj = self.create(**user)
+            user_obj.slug = slug_generator()
+
+        pref: str = getattr(user_obj, update_field)
+        pref_list: List[str] = []
+        if pref != '':
+            pref_list = pref.split(',')
+
+        if update_item in pref_list:
+            return user_obj
+        pref_list.append(update_item)
+        updated_pref: str = ','.join(pref_list)
+
+        setattr(user_obj, update_field, updated_pref)
+        user_obj.save()
+
+        return user_obj
 
 
 class UserDetail(models.Model):
@@ -13,10 +84,21 @@ class UserDetail(models.Model):
     Avoid using null on string-based fields such as CharField and TextField. If a string-based field has null=True,
     that means it has two possible values for “no data”: NULL, and the empty string. In most cases,
     it’s redundant to have two possible values for “no data;” the Django convention is to use the empty string, not NULL
+
+    TODO: Delete this later
     """
-    user = models.ForeignKey(CustomUser, verbose_name='user', on_delete=models.CASCADE)
+    # In case that users use this app via line app only
+    line_message_uid = models.CharField(
+        verbose_name='line_message_uid',
+        blank=True,
+        null=True,
+        max_length=50,
+    )
+    # For security purpose when look up. Slug connects between detail and user models.
+    slug = models.SlugField(blank=False)
     # For recommending foods that tend to be preferred by certain gender
-    gender = models.CharField('gender', max_length=1, choices=GENDER_CHOICES, blank=True, null=True)
+    # You need either null = True or default
+    gender = models.CharField('gender', max_length=2, choices=Gender.choices(), blank=True, null=True)
     # For recommending foods that tend to be preferred by certain age
     age = models.IntegerField('age', blank=True, null=True)
 
@@ -30,8 +112,13 @@ class UserDetail(models.Model):
     ok_recipe = models.TextField(verbose_name='ok_recipe', blank=True)
     dislike_recipe = models.TextField(verbose_name='dislike_recipe', blank=True)
 
+    # recipe that has been recommended before
+    recommended_recipe = models.TextField(verbose_name='recommended_recipe', blank=True)
+
+    objects = UserDetailManager()
+
     def __str__(self):
         """
         For admin to show what' inside of the column
         """
-        return self.user.username
+        return self.slug

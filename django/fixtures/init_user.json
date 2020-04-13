@@ -5,8 +5,33 @@
     "fields": {
       "username": "admin",
       "password": "pbkdf2_sha256$10000$vkRy7QauoLLj$ry+3xm3YX+YrSXbri8s3EcXDIrx5ceM+xQjtpLdw2oE=",
+      "slug": 132132124334,
       "is_superuser": true,
       "is_staff": true,
+      "is_active": true
+    }
+  },
+    {
+    "model": "users.CustomUser",
+    "pk": 2,
+    "fields": {
+      "username": "user_1",
+      "password": "pbkdf2_sha256$10000$vkRy7QauoLLj$ry+3xm3YX+YrSXbri8s3EcXDIrx5ceM+xQjtpLdw2oE=",
+      "slug": 42341354324,
+      "is_superuser": false,
+      "is_staff": true,
+      "is_active": true
+    }
+  },
+    {
+    "model": "users.CustomUser",
+    "pk": 3,
+    "fields": {
+      "username": "user_2",
+      "password": "pbkdf2_sha256$10000$vkRy7QauoLLj$ry+3xm3YX+YrSXbri8s3EcXDIrx5ceM+xQjtpLdw2oE=",
+      "slug": 331231235234,
+      "is_superuser": false,
+      "is_staff": false,
       "is_active": true
     }
   }

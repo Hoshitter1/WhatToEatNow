@@ -17,11 +17,11 @@ from django.urls import path, include
 from django.contrib import admin
 from rest_framework import routers
 
-from user_detail.views import UserDetailView
+from user_detail.views import UserDetailUpdateView
 from options.views import FoodOptionsView
 
 router = routers.DefaultRouter(trailing_slash=False)
-router.register(r'user/detail/', UserDetailView)
+router.register(r'userdetail', UserDetailUpdateView)
 
 urlpatterns = [
     path('api/options', FoodOptionsView.as_view()),  # To get what kind of food options there is
